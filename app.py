@@ -4,7 +4,6 @@ import os
 
 app = Flask(__name__)
 app.secret_key = "pc_expert_secret_key_change_in_production"
-
 # Demo credentials
 DEMO_USER = {
     "email": "student@unipart.edu.ng",
