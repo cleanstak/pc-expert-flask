@@ -19,35 +19,35 @@
     <!-- Top Dark Blue Nav Bar -->
     <!-- Top Dark Blue Nav Bar -->
     <!-- Top Dark Blue Nav Bar -->
-    <header class="w-full bg-[#0E2F5A] px-8 py-4 flex justify-between items-center text-white shadow-sm">
-        <a href="/nav/Home" class="text-base font-semibold flex items-center gap-2">
-            <span class="text-lg">🔲</span> PC Expert
+    <header class="w-full bg-[#0E2F5A] px-4 md:px-8 py-4 flex flex-wrap md:flex-nowrap justify-between items-center text-white shadow-sm gap-4 overflow-x-auto">
+    <a href="/nav/Home" class="text-base font-semibold flex items-center gap-2 mr-6 shrink-0">
+        <span class="text-lg">🔲</span> PC Expert
+    </a>
+    <nav class="flex items-center gap-4 sm:gap-6 md:gap-8 text-sm font-medium shrink-0 overflow-x-auto">
+        <a href="/nav/Home" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Home' %} text-white font-bold after:w-full {% endif %}">
+            Home
         </a>
-        <nav class="flex items-center gap-8 text-sm font-medium">
-            <a href="/nav/Home" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Home' %} text-white font-bold after:w-full {% endif %}">
-                Home
-            </a>
-            <a href="/nav/Diagnose" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Diagnose' %} text-white font-bold after:w-full {% endif %}">
-                Diagnose
-            </a>
-            <a href="/nav/About" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'About' %} text-white font-bold after:w-full {% endif %}">
-                About
-            </a>
-            <a href="/nav/Team" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Team' %} text-white font-bold after:w-full {% endif %}">
-                Team
-            </a>
-            {% if user %}
-            <div class="flex items-center gap-3 bg-blue-900/50 px-3 py-1 rounded-lg border border-blue-400/30">
-                <span class="text-xs text-blue-200">👤 {{ user }}</span>
-                <a href="/logout" class="text-xs text-red-300 hover:text-red-100 underline transition-colors">Logout</a>
-            </div>
-            {% else %}
-            <a href="/nav/SignIn" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'SignIn' %} text-white font-bold after:w-full {% endif %}">
-                Sign In
-            </a>
-            {% endif %}
-        </nav>
-    </header>
+        <a href="/nav/Diagnose" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Diagnose' %} text-white font-bold after:w-full {% endif %}">
+            Diagnose
+        </a>
+        <a href="/nav/About" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'About' %} text-white font-bold after:w-full {% endif %}">
+            About
+        </a>
+        <a href="/nav/Team" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Team' %} text-white font-bold after:w-full {% endif %}">
+            Team
+        </a>
+        {% if user %}
+        <div class="flex items-center gap-3 bg-blue-900/50 px-3 py-1 rounded-lg border border-blue-400/30">
+            <span class="text-xs text-blue-200">👤 {{ user }}</span>
+            <a href="/logout" class="text-xs text-red-300 hover:text-red-100 underline transition-colors">Logout</a>
+        </div>
+        {% else %}
+        <a href="/nav/SignIn" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'SignIn' %} text-white font-bold after:w-full {% endif %}">
+            Sign In
+        </a>
+        {% endif %}
+    </nav>
+</header>
     <!-- Main Container -->
     <main class="w-full max-w-4xl px-6 py-12 flex-1 flex flex-col justify-center items-center">
 
