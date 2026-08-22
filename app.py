@@ -3,7 +3,7 @@ from rules import CATEGORIES, DIAGNOSTIC_TREES, DIAGNOSES
 import os
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = "pc_expert_secret_key_change_in_production"
 
 # Demo credentials
 DEMO_USER = {
