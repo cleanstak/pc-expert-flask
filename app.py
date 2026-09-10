@@ -222,6 +222,7 @@ def select_category(cat_id):
         session['selected_category'] = cat_id
         session['step_number'] = 1
         session['answers'] = []
+        session['completed'] = False
     return redirect(url_for('navigation', page_name='Diagnose'))
 
 @app.route('/answer/<user_choice>')
@@ -257,10 +258,12 @@ def previous_step():
         if answers:
             answers.pop()
             session['answers'] = answers
+        session['completed'] = False
     else:
         session.pop('selected_category', None)
         session.pop('step_number', None)
         session.pop('answers', None)
+        session.pop('completed', None)
 
     return redirect(url_for('navigation', page_name='Diagnose'))
 
@@ -299,7 +302,8 @@ def inject_diagnostic_state():
         category_label=category_data['label'] if category_data else None,
         step_number=step,
         current_question=current_question,
-        current_diagnosis=current_diagnosis
+        current_diagnosis=current_diagnosis,
+        diagnostic_data=DIAGNOSTIC_DATA
     )
 
 

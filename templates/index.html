@@ -9,64 +9,110 @@
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         @media print {
-            header, nav, .no-print { display: none !important; }
+            header, nav, .no-print, #mobile-menu { display: none !important; }
             main { max-width: 100% !important; padding: 0 !important; }
         }
     </style>
 </head>
-<body class="bg-white text-slate-800 min-h-screen flex flex-col items-center">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between antialiased">
 
     <!-- Top Dark Blue Nav Bar -->
-    <header class="w-full bg-[#0E2F5A] px-4 md:px-8 py-4 flex flex-wrap md:flex-nowrap justify-between items-center text-white shadow-sm gap-4 overflow-x-auto">
-        <a href="/nav/Home" class="text-base font-semibold flex items-center gap-2 mr-6 shrink-0">
-            <span class="text-lg">🔲</span> PC Expert
-        </a>
-        <nav class="flex items-center gap-4 sm:gap-6 md:gap-8 text-sm font-medium shrink-0 overflow-x-auto">
-            <a href="/nav/Home" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Home' %} text-white font-bold after:w-full {% endif %}">
+    <header class="w-full bg-[#0E2F5A] px-4 sm:px-6 md:px-8 py-3.5 sm:py-4 shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            
+            <!-- Brand Logo / Title -->
+            <a href="/nav/Home" class="text-base sm:text-lg font-bold text-white flex items-center gap-2 shrink-0">
+                <span class="text-xl">🔲</span> PC Expert
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-200">
+                <a href="/nav/Home" class="relative py-1 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Home' %} text-white font-bold after:w-full {% endif %}">
+                    Home
+                </a>
+                <a href="/nav/Diagnose" class="relative py-1 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Diagnose' %} text-white font-bold after:w-full {% endif %}">
+                    Diagnose
+                </a>
+                <a href="/nav/About" class="relative py-1 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'About' %} text-white font-bold after:w-full {% endif %}">
+                    About
+                </a>
+                <a href="/nav/Team" class="relative py-1 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Team' %} text-white font-bold after:w-full {% endif %}">
+                    Team
+                </a>
+
+                {% if user %}
+                <div class="flex items-center gap-2 bg-blue-900/60 px-3 py-1 rounded-lg border border-blue-400/30 text-xs">
+                    <span class="text-blue-200 font-medium">👤 {{ user }}</span>
+                    <a href="/logout" class="text-red-300 hover:text-red-100 underline transition-colors ml-1">Logout</a>
+                </div>
+                {% else %}
+                <a href="/nav/SignIn" class="relative py-1 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'SignIn' %} text-white font-bold after:w-full {% endif %}">
+                    Sign In
+                </a>
+                {% endif %}
+            </nav>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="hamburger-btn" onclick="toggleMobileMenu()" class="md:hidden text-slate-200 hover:text-white focus:outline-none p-1.5 rounded-lg border border-slate-600/50">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path id="hamburger-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2 border-t border-blue-900/50 mt-3 space-y-2">
+            <a href="/nav/Home" class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-900/50 {% if page == 'Home' %} text-white font-bold bg-blue-900/80 {% else %} text-slate-200 {% endif %}">
                 Home
             </a>
-            <a href="/nav/Diagnose" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Diagnose' %} text-white font-bold after:w-full {% endif %}">
+            <a href="/nav/Diagnose" class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-900/50 {% if page == 'Diagnose' %} text-white font-bold bg-blue-900/80 {% else %} text-slate-200 {% endif %}">
                 Diagnose
             </a>
-            <a href="/nav/About" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'About' %} text-white font-bold after:w-full {% endif %}">
+            <a href="/nav/About" class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-900/50 {% if page == 'About' %} text-white font-bold bg-blue-900/80 {% else %} text-slate-200 {% endif %}">
                 About
             </a>
-            <a href="/nav/Team" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'Team' %} text-white font-bold after:w-full {% endif %}">
+            <a href="/nav/Team" class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-900/50 {% if page == 'Team' %} text-white font-bold bg-blue-900/80 {% else %} text-slate-200 {% endif %}">
                 Team
             </a>
+
             {% if user %}
-            <div class="flex items-center gap-3 bg-blue-900/50 px-3 py-1 rounded-lg border border-blue-400/30">
-                <span class="text-xs text-blue-200">👤 {{ user }}</span>
-                <a href="/logout" class="text-xs text-red-300 hover:text-red-100 underline transition-colors">Logout</a>
+            <div class="flex items-center justify-between bg-blue-900/60 px-3 py-2.5 rounded-lg border border-blue-400/30 text-xs mt-2">
+                <span class="text-blue-200 font-medium">👤 {{ user }}</span>
+                <a href="/logout" class="text-red-300 hover:text-red-100 underline transition-colors">Logout</a>
             </div>
             {% else %}
-            <a href="/nav/SignIn" class="relative py-1 text-slate-200 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full {% if page == 'SignIn' %} text-white font-bold after:w-full {% endif %}">
+            <a href="/nav/SignIn" class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-900/50 {% if page == 'SignIn' %} text-white font-bold bg-blue-900/80 {% else %} text-slate-200 {% endif %}">
                 Sign In
             </a>
             {% endif %}
-        </nav>
+        </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="w-full max-w-4xl px-6 py-12 flex-1 flex flex-col justify-center items-center">
+    <!-- Main Content Container -->
+    <main class="w-full max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-10 md:py-12 flex-1 flex flex-col justify-center items-center">
 
         <!-- ================= HOME PAGE ================= -->
         {% if page == 'Home' %}
-        <div class="flex flex-col md:flex-row items-center gap-12 max-w-3xl w-full">
-            <div class="w-64 h-64 bg-slate-100 rounded-3xl flex flex-col items-center justify-center p-6 border border-slate-200/60 shadow-sm">
-                <div class="text-6xl mb-4">🖥️</div>
-                <div class="flex gap-3 text-3xl">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 w-full max-w-3xl my-auto">
+            <div class="w-48 h-48 sm:w-64 sm:h-64 bg-white rounded-3xl flex flex-col items-center justify-center p-6 border border-slate-200/80 shadow-sm shrink-0">
+                <div class="text-5xl sm:text-6xl mb-4">🖥️</div>
+                <div class="flex gap-3 text-2xl sm:text-3xl">
                     <span>⚙️</span>
                     <span>🔧</span>
                 </div>
             </div>
-            <div class="flex-1 text-left">
-                <span class="text-slate-600 text-base font-medium block mb-1">PC Troubleshooting</span>
-                <h1 class="text-2xl font-bold text-blue-600 mb-3">Expert System</h1>
-                <p class="text-slate-600 text-sm leading-relaxed mb-6">Answer a few simple questions and get expert advice to resolve your computer problems.</p>
-                <a href="/nav/Diagnose" class="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-sm transition-all">
-                    Start Diagnosis
-                </a>
+            <div class="text-center md:text-left flex-1">
+                <span class="text-slate-500 text-xs sm:text-sm font-semibold tracking-wide uppercase block mb-1">PC Troubleshooting</span>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0E2F5A] mb-3 leading-tight">Expert System</h1>
+                <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6 max-w-md mx-auto md:mx-0">
+                    Answer a few simple questions to receive instant, rule-based diagnostic recommendations for hardware and system issues.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
+                    <a href="/nav/Diagnose" class="w-full sm:w-auto text-center px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all">
+                        Start Diagnosis
+                    </a>
+                </div>
                 <p class="text-blue-600 text-xs font-semibold mt-4">✓ Fast • Simple • Rule-based</p>
             </div>
         </div>
@@ -78,48 +124,48 @@
             <!-- Category Selection View -->
             {% if not selected_category %}
             <div class="w-full max-w-2xl text-center">
-                <h1 class="text-3xl font-bold text-[#0E2F5A] mb-2">What problem are you experiencing?</h1>
-                <p class="text-slate-500 text-sm mb-8">Select the problem that best describes your issue.</p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-[#0E2F5A] mb-2">What problem are you experiencing?</h1>
+                <p class="text-slate-500 text-xs sm:text-sm mb-6 sm:mb-8">Select the issue category that best describes your symptom.</p>
 
-                <div class="flex flex-col gap-4">
-                    <a href="/select_category/cat_power" class="w-full bg-white hover:border-blue-500 border border-slate-200 text-slate-800 rounded-2xl px-6 py-4 flex justify-between items-center font-medium shadow-sm transition-all group">
-                        <span class="flex items-center gap-4">
-                            <span class="text-red-500 text-xl">⏻</span>
-                            <span class="text-slate-700 font-semibold text-base">Computer won't turn on</span>
+                <div class="flex flex-col gap-3 sm:gap-4">
+                    <a href="/select_category/cat_power" class="w-full bg-white hover:border-blue-500 border border-slate-200 text-slate-800 rounded-2xl px-5 sm:px-6 py-4 flex justify-between items-center font-medium shadow-sm hover:shadow-md transition-all group">
+                        <span class="flex items-center gap-3 sm:gap-4 text-left">
+                            <span class="text-red-500 text-xl sm:text-2xl">⏻</span>
+                            <span class="text-slate-800 font-semibold text-sm sm:text-base">Computer won't turn on</span>
                         </span>
-                        <span class="text-slate-400 group-hover:text-blue-600 text-lg">&rsaquo;</span>
+                        <span class="text-slate-400 group-hover:text-blue-600 text-xl transition-colors">&rsaquo;</span>
                     </a>
 
-                    <a href="/select_category/cat_heat" class="w-full bg-white hover:border-blue-500 border border-slate-200 text-slate-800 rounded-2xl px-6 py-4 flex justify-between items-center font-medium shadow-sm transition-all group">
-                        <span class="flex items-center gap-4">
-                            <span class="text-red-500 text-xl">♨</span>
-                            <span class="text-slate-700 font-semibold text-base">Computer is overheating</span>
+                    <a href="/select_category/cat_heat" class="w-full bg-white hover:border-blue-500 border border-slate-200 text-slate-800 rounded-2xl px-5 sm:px-6 py-4 flex justify-between items-center font-medium shadow-sm hover:shadow-md transition-all group">
+                        <span class="flex items-center gap-3 sm:gap-4 text-left">
+                            <span class="text-orange-500 text-xl sm:text-2xl">♨</span>
+                            <span class="text-slate-800 font-semibold text-sm sm:text-base">Computer is overheating</span>
                         </span>
-                        <span class="text-slate-400 group-hover:text-blue-600 text-lg">&rsaquo;</span>
+                        <span class="text-slate-400 group-hover:text-blue-600 text-xl transition-colors">&rsaquo;</span>
                     </a>
 
-                    <a href="/select_category/cat_net" class="w-full bg-white hover:border-blue-500 border border-slate-200 text-slate-800 rounded-2xl px-6 py-4 flex justify-between items-center font-medium shadow-sm transition-all group">
-                        <span class="flex items-center gap-4">
-                            <span class="text-blue-600 text-xl">🌐</span>
-                            <span class="text-slate-700 font-semibold text-base">No internet connection</span>
+                    <a href="/select_category/cat_net" class="w-full bg-white hover:border-blue-500 border border-slate-200 text-slate-800 rounded-2xl px-5 sm:px-6 py-4 flex justify-between items-center font-medium shadow-sm hover:shadow-md transition-all group">
+                        <span class="flex items-center gap-3 sm:gap-4 text-left">
+                            <span class="text-blue-600 text-xl sm:text-2xl">🌐</span>
+                            <span class="text-slate-800 font-semibold text-sm sm:text-base">No internet connection</span>
                         </span>
-                        <span class="text-slate-400 group-hover:text-blue-600 text-lg">&rsaquo;</span>
+                        <span class="text-slate-400 group-hover:text-blue-600 text-xl transition-colors">&rsaquo;</span>
                     </a>
 
-                    <a href="/select_category/cat_slow" class="w-full bg-white hover:border-blue-500 border border-slate-200 text-slate-800 rounded-2xl px-6 py-4 flex justify-between items-center font-medium shadow-sm transition-all group">
-                        <span class="flex items-center gap-4">
-                            <span class="text-emerald-500 text-xl">⏱</span>
-                            <span class="text-slate-700 font-semibold text-base">Computer is running slowly</span>
+                    <a href="/select_category/cat_slow" class="w-full bg-white hover:border-blue-500 border border-slate-200 text-slate-800 rounded-2xl px-5 sm:px-6 py-4 flex justify-between items-center font-medium shadow-sm hover:shadow-md transition-all group">
+                        <span class="flex items-center gap-3 sm:gap-4 text-left">
+                            <span class="text-emerald-500 text-xl sm:text-2xl">⏱</span>
+                            <span class="text-slate-800 font-semibold text-sm sm:text-base">Computer is running slowly</span>
                         </span>
-                        <span class="text-slate-400 group-hover:text-blue-600 text-lg">&rsaquo;</span>
+                        <span class="text-slate-400 group-hover:text-blue-600 text-xl transition-colors">&rsaquo;</span>
                     </a>
 
-                    <a href="/select_category/cat_audio" class="w-full bg-white hover:border-blue-500 border border-slate-200 text-slate-800 rounded-2xl px-6 py-4 flex justify-between items-center font-medium shadow-sm transition-all group">
-                        <span class="flex items-center gap-4">
-                            <span class="text-purple-600 text-xl">🔊</span>
-                            <span class="text-slate-700 font-semibold text-base">No sound</span>
+                    <a href="/select_category/cat_audio" class="w-full bg-white hover:border-blue-500 border border-slate-200 text-slate-800 rounded-2xl px-5 sm:px-6 py-4 flex justify-between items-center font-medium shadow-sm hover:shadow-md transition-all group">
+                        <span class="flex items-center gap-3 sm:gap-4 text-left">
+                            <span class="text-purple-600 text-xl sm:text-2xl">🔊</span>
+                            <span class="text-slate-800 font-semibold text-sm sm:text-base">No sound output</span>
                         </span>
-                        <span class="text-slate-400 group-hover:text-blue-600 text-lg">&rsaquo;</span>
+                        <span class="text-slate-400 group-hover:text-blue-600 text-xl transition-colors">&rsaquo;</span>
                     </a>
                 </div>
             </div>
@@ -127,69 +173,74 @@
 
             <!-- Question Step View -->
             {% if current_question %}
-            <div class="w-full max-w-2xl">
-                <div class="flex justify-between items-center text-xs text-slate-500 mb-2">
-                    <span>Problem: {{ category_label }}</span>
+            <div class="w-full max-w-2xl bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm">
+                <div class="flex justify-between items-center text-xs font-semibold text-slate-500 mb-2">
+                    <span>Category: {{ category_label }}</span>
                     <span>Step {{ step_number }} of 3</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-1.5 mb-10">
-                    <div class="bg-blue-600 h-1.5 rounded-full {% if step_number == 1 %}w-1/3{% elif step_number == 2 %}w-2/3{% else %}w-full{% endif %}"></div>
+                <div class="w-full bg-slate-100 rounded-full h-2 mb-8">
+                    <div class="bg-blue-600 h-2 rounded-full transition-all duration-300 {% if step_number == 1 %}w-1/3{% elif step_number == 2 %}w-2/3{% else %}w-full{% endif %}"></div>
                 </div>
 
-                <div class="flex items-start gap-6 mb-10">
-                    <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                <div class="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mb-8">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-bold shrink-0">
                         ?
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-800 mb-2 leading-snug">{{ current_question.question }}</h2>
-                        <p class="text-slate-500 text-sm">{{ current_question.subtext }}</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-2 leading-snug">{{ current_question.question }}</h2>
+                        <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">{{ current_question.subtext }}</p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <a href="/answer/no" class="w-full text-center py-3 bg-white border border-slate-200 text-red-500 font-semibold rounded-xl hover:bg-slate-50 transition-all">
+                <div class="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
+                    <a href="/answer/no" class="w-full text-center py-3 sm:py-3.5 bg-slate-100 hover:bg-red-50 hover:border-red-200 border border-transparent text-red-600 font-bold rounded-xl transition-all">
                         No
                     </a>
-                    <a href="/answer/yes" class="w-full text-center py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-sm">
+                    <a href="/answer/yes" class="w-full text-center py-3 sm:py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all">
                         Yes
                     </a>
                 </div>
 
-                <a href="/back" class="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline">
-                    &larr; Back
-                </a>
+                <div class="flex justify-between items-center pt-2">
+                    <a href="/back" class="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-blue-600 hover:underline">
+                        &larr; Back to previous
+                    </a>
+                    <a href="/reset" class="text-xs text-slate-400 hover:text-slate-600 underline">
+                        Cancel session
+                    </a>
+                </div>
             </div>
             {% endif %}
 
             <!-- Outcome View -->
             {% if current_diagnosis %}
-            <div class="w-full max-w-xl text-center">
-                <div class="flex items-center justify-center gap-4 mb-4">
-                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl font-bold">
+            <div class="w-full max-w-xl bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm text-center">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xl font-bold">
                         ✓
                     </div>
-                    <h1 class="text-3xl font-bold text-emerald-600">Diagnosis Found!</h1>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-emerald-600">Diagnosis Found</h1>
                 </div>
 
-                <div class="bg-emerald-50 text-slate-800 font-bold text-xl py-4 px-6 rounded-2xl mb-4">
+                <div class="bg-emerald-50 border border-emerald-100 text-emerald-900 font-bold text-lg sm:text-xl py-3.5 px-5 rounded-2xl mb-4">
                     {{ current_diagnosis.title }}
                 </div>
 
-                <p class="text-slate-600 text-sm mb-6 max-w-md mx-auto leading-relaxed">
+                <p class="text-slate-600 text-xs sm:text-sm mb-6 leading-relaxed max-w-md mx-auto">
                     {{ current_diagnosis.description }}
                 </p>
 
-                <div class="bg-blue-50/70 border border-blue-100/50 text-left p-5 rounded-2xl mb-8">
-                    <strong class="text-blue-700 text-sm block mb-1">Recommended Action:</strong>
-                    <p class="text-slate-700 text-sm">{{ current_diagnosis.action }}</p>
+                <div class="bg-blue-50/80 border border-blue-100 text-left p-5 rounded-2xl mb-6">
+                    <strong class="text-blue-800 text-xs sm:text-sm uppercase tracking-wide block mb-1">Recommended Action Plan:</strong>
+                    <p class="text-slate-700 text-xs sm:text-sm leading-relaxed">{{ current_diagnosis.action }}</p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 no-print">
-                    <a href="/reset" class="w-full py-3 bg-white border border-slate-200 text-blue-600 font-semibold text-sm rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 no-print">
+                    <a href="/reset" class="w-full py-3 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-semibold text-xs sm:text-sm rounded-xl transition-all flex items-center justify-center gap-2">
                         ↺ Start New Diagnosis
                     </a>
-                    <button onclick="window.print()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-sm transition-all">
-                        Print Result
+                    <button onclick="window.print()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md transition-all">
+                        🖨 Print Diagnosis
                     </button>
                 </div>
             </div>
@@ -199,172 +250,309 @@
 
         <!-- ================= ABOUT PAGE ================= -->
         {% if page == 'About' %}
-        <div class="w-full max-w-lg text-center">
-            <div class="w-20 h-20 bg-blue-50 text-slate-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-blue-100">
+        <div class="w-full max-w-xl bg-white p-6 sm:p-10 rounded-3xl border border-slate-200/80 shadow-sm text-center">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-2xl sm:text-3xl mx-auto mb-4 border border-blue-100">
                 ⚙️
             </div>
 
-            <h1 class="text-xl font-bold text-slate-800 mb-2">About PC Expert</h1>
-            <p class="text-slate-500 text-sm mb-8 max-w-sm mx-auto leading-relaxed">
-                A simple expert system for diagnosing common personal computer problems.
+            <h1 class="text-2xl font-bold text-slate-800 mb-2">About PC Expert</h1>
+            <p class="text-slate-500 text-xs sm:text-sm mb-6 max-w-sm mx-auto leading-relaxed">
+                An rule-based decision support system designed to diagnose common hardware, power, thermal, and network issues.
             </p>
 
-            <div class="bg-slate-50 text-left p-5 rounded-2xl text-xs text-slate-600 mb-8 leading-relaxed">
-                <strong class="text-blue-600 block mb-2 font-bold tracking-wide">HOW IT WORKS</strong>
-                <p class="mb-1">Users answer a series of questions.</p>
-                <p class="mb-1">The rule-based inference engine analyzes</p>
-                <p>the answers and produces a diagnosis.</p>
+            <div class="bg-slate-50 border border-slate-100 text-left p-5 rounded-2xl text-xs sm:text-sm text-slate-600 mb-6 space-y-2">
+                <strong class="text-blue-700 block text-xs font-bold uppercase tracking-wider mb-2">System Architecture & Workflow</strong>
+                <p>• <strong>User Interface:</strong> Tailwind CSS & Jinja2 dynamic views.</p>
+                <p>• <strong>Inference Engine:</strong> Flask Python route controller processing forward chaining diagnostic trees.</p>
+                <p>• <strong>Knowledge Base:</strong> Structured fault patterns categorized across core hardware domains.</p>
             </div>
 
-            <div class="text-left mb-8">
-                <h3 class="text-blue-600 font-semibold text-base mb-3">Core Components</h3>
-                <ul class="text-xs text-slate-600 space-y-2">
-                    <li>• Knowledge Base</li>
-                    <li>• Inference Engine</li>
-                    <li>• User Interface</li>
-                    <li>• Diagnosis & Recommended Solution</li>
-                </ul>
-            </div>
-
-            <a href="/nav/Diagnose" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-sm transition-all">
-                Start Diagnosis &rarr;
+            <a href="/nav/Diagnose" class="inline-flex items-center justify-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-md transition-all">
+                Launch System &rarr;
             </a>
         </div>
         {% endif %}
 
         <!-- ================= TEAM PAGE ================= -->
         {% if page == 'Team' %}
-        <div class="w-full max-w-2xl text-center">
-            <h1 class="text-xl font-bold text-slate-800 mb-1">Meet Our Team</h1>
-            <p class="text-slate-500 text-xs mb-8">ECE 515.2 • Expert System Project</p>
+        <div class="w-full max-w-4xl text-center">
+            <h1 class="text-2xl sm:text-3xl font-bold text-[#0E2F5A] mb-1">Meet Our Team</h1>
+            <p class="text-slate-500 text-xs sm:text-sm mb-8">Department of Electrical & Electronic Engineering • ECE 515.2 Project</p>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">01</div>
-                    <div>
-                        <strong class="text-sm block text-slate-800">Olaniyan Al-azeem</strong>
-                        <span class="text-xs text-slate-400">U2021/3020020</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-left">
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs shrink-0">01</div>
+                    <div class="min-w-0">
+                        <strong class="text-xs sm:text-sm font-semibold text-slate-800 block truncate">Olaniyan Al-azeem</strong>
+                        <span class="text-[11px] text-slate-400 block">U2021/3020020</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">02</div>
-                    <div>
-                        <strong class="text-sm block text-slate-800">Anumudu Samuel Nkemakolam</strong>
-                        <span class="text-xs text-slate-400">UU2021/3020015</span>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs shrink-0">02</div>
+                    <div class="min-w-0">
+                        <strong class="text-xs sm:text-sm font-semibold text-slate-800 block truncate">Anumudu Samuel Nkemakolam</strong>
+                        <span class="text-[11px] text-slate-400 block">UU2021/3020015</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">03</div>
-                    <div>
-                        <strong class="text-sm block text-slate-800">Mark Trust Ichechi</strong>
-                        <span class="text-xs text-slate-400">U2021/3020013</span>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs shrink-0">03</div>
+                    <div class="min-w-0">
+                        <strong class="text-xs sm:text-sm font-semibold text-slate-800 block truncate">Mark Trust Ichechi</strong>
+                        <span class="text-[11px] text-slate-400 block">U2021/3020013</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">04</div>
-                    <div>
-                        <strong class="text-sm block text-slate-800">Samuel Tamunotonye Douglas</strong>
-                        <span class="text-xs text-slate-400">U2021/3020018</span>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs shrink-0">04</div>
+                    <div class="min-w-0">
+                        <strong class="text-xs sm:text-sm font-semibold text-slate-800 block truncate">Samuel Tamunotonye Douglas</strong>
+                        <span class="text-[11px] text-slate-400 block">U2021/3020018</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">05</div>
-                    <div>
-                        <strong class="text-sm block text-slate-800">Senego Abraham Tambari</strong>
-                        <span class="text-xs text-slate-400">U2021/3020019</span>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs shrink-0">05</div>
+                    <div class="min-w-0">
+                        <strong class="text-xs sm:text-sm font-semibold text-slate-800 block truncate">Senego Abraham Tambari</strong>
+                        <span class="text-[11px] text-slate-400 block">U2021/3020019</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">06</div>
-                    <div>
-                        <strong class="text-sm block text-slate-800">Eze Darlington Ikenna</strong>
-                        <span class="text-xs text-slate-400">U2021/3020017</span>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs shrink-0">06</div>
+                    <div class="min-w-0">
+                        <strong class="text-xs sm:text-sm font-semibold text-slate-800 block truncate">Eze Darlington Ikenna</strong>
+                        <span class="text-[11px] text-slate-400 block">U2021/3020017</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">07</div>
-                    <div>
-                        <strong class="text-sm block text-slate-800">Peter Ukpeme Mfon</strong>
-                        <span class="text-xs text-slate-400">U2021/3020021</span>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs shrink-0">07</div>
+                    <div class="min-w-0">
+                        <strong class="text-xs sm:text-sm font-semibold text-slate-800 block truncate">Peter Ukpeme Mfon</strong>
+                        <span class="text-[11px] text-slate-400 block">U2021/3020021</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">08</div>
-                    <div>
-                        <strong class="text-sm block text-slate-800">Atomatofa Emamoke Oghenewona</strong>
-                        <span class="text-xs text-slate-400">U2021/3020012</span>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs shrink-0">08</div>
+                    <div class="min-w-0">
+                        <strong class="text-xs sm:text-sm font-semibold text-slate-800 block truncate">Atomatofa Emamoke Oghenewona</strong>
+                        <span class="text-[11px] text-slate-400 block">U2021/3020012</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">09</div>
-                    <div>
-                        <strong class="text-sm block text-slate-800">Uchechi Onyedikachi David</strong>
-                        <span class="text-xs text-slate-400">U2021/3020014</span>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs shrink-0">09</div>
+                    <div class="min-w-0">
+                        <strong class="text-xs sm:text-sm font-semibold text-slate-800 block truncate">Uchechi Onyedikachi David</strong>
+                        <span class="text-[11px] text-slate-400 block">U2021/3020014</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex items-center gap-4 text-left">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">10</div>
-                    <div>
-                        <strong class="text-sm block text-slate-800">Anaenugwu Chukwuebuka Jeffrey</strong>
-                        <span class="text-xs text-slate-400">U2021/3020022</span>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4 sm:col-span-2 lg:col-span-1">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs shrink-0">10</div>
+                    <div class="min-w-0">
+                        <strong class="text-xs sm:text-sm font-semibold text-slate-800 block truncate">Anaenugwu Chukwuebuka Jeffrey</strong>
+                        <span class="text-[11px] text-slate-400 block">U2021/3020022</span>
                     </div>
                 </div>
             </div>
         </div>
         {% endif %}
 
-        <!-- ================= SIGN IN PAGE ================= -->
+        <!-- ================= SIGN IN / SIGN UP / FORGOT PASSWORD PAGE ================= -->
         {% if page == 'SignIn' %}
-        <div class="w-full max-w-sm text-center">
-            <h1 class="text-xl font-bold text-slate-800 mb-1">Welcome Back</h1>
-            <p class="text-slate-500 text-xs mb-8">Sign in to continue to PC Expert</p>
-
-            <form action="/login" method="POST" class="text-left space-y-4">
-                {% if login_error %}
-                <div class="p-3 bg-red-50 text-red-600 text-xs rounded-xl font-medium border border-red-100">
-                    {{ login_error }}
-                </div>
-                {% endif %}
+        <div class="w-full max-w-4xl bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden flex flex-col md:flex-row my-auto">
+            
+            <!-- Left: Brand Hero Panel -->
+            <div class="md:w-1/2 bg-[#0E2F5A] p-6 sm:p-8 md:p-10 text-white flex flex-col justify-between items-center text-center relative overflow-hidden">
+                <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
                 
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Email Address</label>
-                    <input type="email" name="email" placeholder="student@unipart.edu.ng" required class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-500">
-                </div>
-
-                <div>
-                    <div class="flex justify-between items-center mb-1">
-                        <label class="block text-xs font-semibold text-slate-600">Password</label>
-                        <a href="#" class="text-xs text-blue-600 hover:underline">Forgot password?</a>
+                <div class="w-full flex flex-col items-center">
+                    <!-- Centered PC Graphic Container -->
+                    <div class="w-32 h-32 sm:w-36 sm:h-36 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 flex flex-col items-center justify-center mb-6 shadow-inner mx-auto">
+                        <div class="text-5xl sm:text-6xl mb-2">🖥️</div>
+                        <div class="flex gap-3 text-xl sm:text-2xl">
+                            <span>⚙️</span>
+                            <span>🔧</span>
+                        </div>
                     </div>
-                    <input type="password" name="password" placeholder="password123" required class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-500">
+                    
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight mb-3 sm:mb-4">
+                        Smart PC Troubleshooting Engine
+                    </h2>
+                    <p class="text-blue-200 text-xs sm:text-sm leading-relaxed mb-6 max-w-xs mx-auto">
+                        Diagnose hardware faults, power failures, thermal degradation, and audio conflicts with rule-based precision.
+                    </p>
                 </div>
 
-                <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-sm transition-all mt-2">
-                    Sign In
-                </button>
-            </form>
+                <div class="w-full space-y-2.5 border-t border-blue-400/20 pt-6 text-xs text-blue-200 text-left">
+                    <div class="flex items-center gap-2">
+                        <span class="text-emerald-400 text-sm">✓</span> Instant Rule-Based Diagnostics
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-emerald-400 text-sm">✓</span> Actionable Repair Recommendations
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-emerald-400 text-sm">✓</span> Printable Fault Analysis Reports
+                    </div>
+                </div>
+            </div>
 
-            <p class="text-xs text-slate-500 mt-6">Don't have an account? <a href="#" class="text-blue-600 hover:underline">Create one</a></p>
+            <!-- Right: Auth Form Panel -->
+            <div class="md:w-1/2 p-6 sm:p-8 md:p-10 flex flex-col justify-center bg-white">
+                
+                <!-- Toggle Tabs Container -->
+                <div id="auth-tab-navigation" class="flex bg-slate-100 p-1 rounded-xl mb-6 text-xs font-semibold">
+                    <button id="tab-signin-btn" onclick="showAuthTab('signin')" class="flex-1 py-2.5 rounded-lg text-center bg-white text-slate-800 shadow-sm transition-all">
+                        Sign In
+                    </button>
+                    <button id="tab-signup-btn" onclick="showAuthTab('signup')" class="flex-1 py-2.5 rounded-lg text-center text-slate-500 hover:text-slate-800 transition-all">
+                        Create Account
+                    </button>
+                </div>
 
-            <div class="border-t border-slate-100 my-6"></div>
+                <!-- Form 1: Sign In -->
+                <div id="signin-form-wrapper">
+                    <h3 class="text-xl font-bold text-slate-800 mb-1">Welcome Back</h3>
+                    <p class="text-slate-500 text-xs mb-6">Sign in to start your diagnostic session.</p>
 
-            <p class="text-xs text-slate-400 mb-3">Or continue without an account</p>
-            <a href="/nav/Diagnose" class="inline-flex items-center gap-1 text-sm text-blue-600 font-semibold hover:underline">
-                Continue as Guest &rarr;
-            </a>
+                    {% if login_error %}
+                    <div class="p-3 mb-4 bg-red-50 text-red-600 text-xs rounded-xl font-medium border border-red-100">
+                        {{ login_error }}
+                    </div>
+                    {% endif %}
+
+                    <form action="/login" method="POST" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Email Address</label>
+                            <input type="email" name="email" placeholder="student@uniport.edu.ng" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600 transition-colors">
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="block text-xs font-semibold text-slate-600">Password</label>
+                                <button type="button" onclick="showAuthTab('forgot')" class="text-xs text-blue-600 hover:underline">Forgot?</button>
+                            </div>
+                            <input type="password" name="password" placeholder="••••••••" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600 transition-colors">
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-md transition-all">
+                            Sign In
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Form 2: Sign Up (Hidden by default) -->
+                <div id="signup-form-wrapper" class="hidden">
+                    <h3 class="text-xl font-bold text-slate-800 mb-1">Create Account</h3>
+                    <p class="text-slate-500 text-xs mb-6">Register to access the full diagnostic suite.</p>
+
+                    {% if register_error %}
+                    <div class="p-3 mb-4 bg-red-50 text-red-600 text-xs rounded-xl font-medium border border-red-100">
+                        {{ register_error }}
+                    </div>
+                    {% endif %}
+
+                    <form action="/register" method="POST" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Full Name</label>
+                            <input type="text" name="name" placeholder="John Doe" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Email Address</label>
+                            <input type="email" name="email" placeholder="student@uniport.edu.ng" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Password</label>
+                            <input type="password" name="password" placeholder="••••••••" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600 transition-colors">
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-md transition-all">
+                            Register
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Form 3: Forgot Password (Hidden by default) -->
+                <div id="forgot-form-wrapper" class="hidden">
+                    <h3 class="text-xl font-bold text-slate-800 mb-1">Reset Password</h3>
+                    <p class="text-slate-500 text-xs mb-6">Enter your email address to reset your account password.</p>
+
+                    <form action="/reset_password" method="POST" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Email Address</label>
+                            <input type="email" name="email" placeholder="student@uniport.edu.ng" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600 transition-colors">
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-md transition-all">
+                            Send Reset Instructions
+                        </button>
+                    </form>
+                    <div class="mt-4 text-center">
+                        <button type="button" onclick="showAuthTab('signin')" class="text-xs text-blue-600 hover:underline">
+                            &larr; Back to Sign In
+                        </button>
+                    </div>
+                </div>
+
+            </div>
         </div>
         {% endif %}
 
     </main>
 
+    <!-- Footer -->
+    <footer class="w-full bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 no-print mt-auto">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 PC Expert Troubleshooting System. ECE 515.2 Project.</p>
+            <div class="flex items-center gap-4">
+                <a href="/nav/Home" class="hover:text-white transition-colors">Home</a>
+                <a href="/nav/Diagnose" class="hover:text-white transition-colors">Diagnose</a>
+                <a href="/nav/About" class="hover:text-white transition-colors">About</a>
+                <a href="/nav/Team" class="hover:text-white transition-colors">Team</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interactivity -->
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function showAuthTab(tab) {
+            const signinWrapper = document.getElementById('signin-form-wrapper');
+            const signupWrapper = document.getElementById('signup-form-wrapper');
+            const forgotWrapper = document.getElementById('forgot-form-wrapper');
+            const tabNav = document.getElementById('auth-tab-navigation');
+            
+            const btnSignin = document.getElementById('tab-signin-btn');
+            const btnSignup = document.getElementById('tab-signup-btn');
+
+            if (tab === 'signin') {
+                tabNav.classList.remove('hidden');
+                signinWrapper.classList.remove('hidden');
+                signupWrapper.classList.add('hidden');
+                forgotWrapper.classList.add('hidden');
+
+                btnSignin.className = "flex-1 py-2.5 rounded-lg text-center bg-white text-slate-800 shadow-sm transition-all";
+                btnSignup.className = "flex-1 py-2.5 rounded-lg text-center text-slate-500 hover:text-slate-800 transition-all";
+            } else if (tab === 'signup') {
+                tabNav.classList.remove('hidden');
+                signinWrapper.classList.add('hidden');
+                signupWrapper.classList.remove('hidden');
+                forgotWrapper.classList.add('hidden');
+
+                btnSignin.className = "flex-1 py-2.5 rounded-lg text-center text-slate-500 hover:text-slate-800 transition-all";
+                btnSignup.className = "flex-1 py-2.5 rounded-lg text-center bg-white text-slate-800 shadow-sm transition-all";
+            } else if (tab === 'forgot') {
+                tabNav.classList.add('hidden');
+                signinWrapper.classList.add('hidden');
+                signupWrapper.classList.add('hidden');
+                forgotWrapper.classList.remove('hidden');
+            }
+        }
+    </script>
 </body>
 </html>
