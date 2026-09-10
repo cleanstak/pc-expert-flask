@@ -53,9 +53,12 @@
             </nav>
 
             <!-- Mobile Hamburger Button -->
-            <button id="hamburger-btn" onclick="toggleMobileMenu()" class="md:hidden text-slate-200 hover:text-white focus:outline-none p-1.5 rounded-lg border border-slate-600/50">
+            <button id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation" class="md:hidden text-slate-200 hover:text-white focus:outline-none p-1.5 rounded-lg border border-slate-600/50">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path id="hamburger-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    <!-- Hamburger Icon (3 lines) -->
+                    <path id="hamburger-icon" class="block" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    <!-- Close Icon (X) -->
+                    <path id="close-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
 
@@ -540,7 +543,15 @@
     <script>
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            // Toggle menu visibility
             menu.classList.toggle('hidden');
+
+            // Toggle icon states
+            hamburgerIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
         }
 
         function showAuthTab(tab) {
