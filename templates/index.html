@@ -260,18 +260,26 @@
 
             <h1 class="text-2xl font-bold text-slate-800 mb-2">About PC Expert</h1>
             <p class="text-slate-500 text-xs sm:text-sm mb-6 max-w-sm mx-auto leading-relaxed">
-                An rule-based decision support system designed to diagnose common hardware, power, thermal, and network issues.
+                A simple expert system for diagnosing common personal computer problems.
             </p>
 
             <div class="bg-slate-50 border border-slate-100 text-left p-5 rounded-2xl text-xs sm:text-sm text-slate-600 mb-6 space-y-2">
-                <strong class="text-blue-700 block text-xs font-bold uppercase tracking-wider mb-2">System Architecture & Workflow</strong>
-                <p>• <strong>User Interface:</strong> Tailwind CSS & Jinja2 dynamic views.</p>
-                <p>• <strong>Inference Engine:</strong> Flask Python route controller processing forward chaining diagnostic trees.</p>
-                <p>• <strong>Knowledge Base:</strong> Structured fault patterns categorized across core hardware domains.</p>
+                <strong class="text-blue-600 block text-xs font-bold uppercase tracking-wider mb-2">HOW IT WORKS</strong>
+                <p>Users answer a series of questions. The rule-based inference engine analyzes the answers and produces a diagnosis.</p>
+                
+                
+            </div>
+
+            <div class="bg-slate-50 border border-slate-100 text-left p-5 rounded-2xl text-xs sm:text-sm text-slate-600 mb-6 space-y-2">
+                <strong class="text-blue-600 block text-xs font-bold uppercase tracking-wider mb-2">CORE COMPONENTS</strong>
+                <p>•  Knowledge Base</p>
+                <p>• Inference Engine</p>
+                <p>• User Interface</p>
+                <p>• Diagnosis & Recommended Solution</p>
             </div>
 
             <a href="/nav/Diagnose" class="inline-flex items-center justify-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-md transition-all">
-                Launch System &rrarr;
+                Start Diagnosis &rarr;
             </a>
         </div>
         {% endif %}
